@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Node
+{
+    public:
+    int data;
+    char c;
+    Node *left,*right;
+    Node(char t,int n)
+    {
+        data=n;
+        left=right=NULL;
+        c=t;
+    }
+};
+
+void print(Node *node,string s)
+{
+        
+        if(node->left)
+        {
+            print(node->left,s+'0');
+        }
+        
+        if(node->right)
+        {
+            print(node->right,s+'1');
+        }
+        if(node->left==NULL && node->right==NULL)
+        {
+            cout<<node->c<<": "<<s<<endl;
+        }
+    
+}
+class Comp{
+public:
+bool operator()(Node *a, Node *b)
+{
+    return a->data>b->data;
+}
+};
+Node * buildTree(int arr[],int n)
+{
+    priority_queue<Node *,vector<Node *>,Comp>pq;
+    char ch='a';
+    for(int i=0;i<n;i++)
+    {
+        Node *node=new Node(ch,arr[i]);
+        pq.push(node);
+        ch++;
+    }
+    
+    while(pq.size()!=1)
+    {
+        Node *new_node=new Node('$',0);
+        new_node->left=pq.top();
+        pq.pop();
+        new_node->right=pq.top();
+        pq.pop();
+        new_node->data=new_node->left->data+new_node->right->data;
+        pq.push(new_node);
+        
+    }
+    return pq.top();
+}
+void Huffman(int arr[], int n)
+{
+    Node *root=buildTree(arr,n);
+    
+    cout<<"Hauffman Coding"<<endl;
+    
+    string s=" "; 
+        print(root,s);
+    
+}
+int main()
+{
+    int arr[]={12,2,7,13,14,85};
+    int n=(sizeof(arr)/sizeof(arr[0]));
+    Huffman(arr,n);
+    
+    return 0;
+}
