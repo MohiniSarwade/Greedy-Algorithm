@@ -1,3 +1,5 @@
+//Time complexity O(nlogn);
+
 #include<bits/stdc++.h>
 using namespace std;
 int Min(int a[], int l,int mid)
